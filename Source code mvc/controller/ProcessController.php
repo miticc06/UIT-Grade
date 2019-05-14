@@ -267,8 +267,9 @@ class ProcessController
  
 		date_default_timezone_set('Asia/Krasnoyarsk');
 	   
-		$sql = "SELECT id FROM user";
-		$result = $conn->query($sql);
+		$sql = "SELECT id FROM user WHERE (active = 1) AND (lastcheck + INTERVAL 5 MINUTE < NOW()) ORDER BY lastcheck ASC LIMIT 3;"; // 5p kiểm tra 1 lần, mỗi lần 3 user
+		
+	        $result = $conn->query($sql);
 		
 		if ($result->num_rows > 0) 
 		{
